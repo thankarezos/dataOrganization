@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.decomposition import PCA
-import tkWindow as tkw
+from tkWindow import screen_center
 
 def neighbors(data):
     neighb = NearestNeighbors(n_neighbors=4) # creating an object of the NearestNeighbors class
@@ -16,7 +16,7 @@ def neighbors(data):
     # Sort and plot the distances results
     distances = np.sort(distances, axis = 0) # sorting the distances
     distances = distances[:, 1] # taking the second column of the sorted distances
-    tkw.screen_center(fig)
+    screen_center(fig)
     ax.plot(distances) # plotting the distances
     plt.show()
 
@@ -35,7 +35,7 @@ def dbscan(data, eps, min_samples):
     x['cluster'] = dbscan.labels_
 
     fig, ax = plt.subplots(figsize=(9, 6))
-    tkw.screen_center(fig)
+    screen_center(fig)
 
     sns.scatterplot(x=0, y=1, hue='cluster', data=x, palette='Set1', ax=ax)
     plt.show()

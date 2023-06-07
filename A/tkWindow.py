@@ -1,8 +1,6 @@
 
 
 import tkinter
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class Window:
     def __init__(self, window_width, window_height, window_title=""):
