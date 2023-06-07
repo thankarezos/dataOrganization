@@ -42,6 +42,8 @@ def kmeans(data, k):
 
     fig, ax = plt.subplots(figsize=(9,6))
 
+    tkw.screen_center(fig)
+
     ax.scatter(x[:, 0], x[:, 1], c=kmeans.labels_)
     ax.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1] , marker='s', s=500, alpha=0.5)
     plt.show()

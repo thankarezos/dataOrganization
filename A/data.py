@@ -14,6 +14,7 @@ import os
 import tkinter as tk
 import dataframe as dfw
 import tkWindow as tkw
+import dbscan as dbs
 
 
 pd.options.mode.chained_assignment = None 
@@ -34,21 +35,31 @@ window = tkw.Window(500, 500, "Menu").window
 
 
 
+
 def button1_clicked():
     km.elbow(data)
 
 def button2_clicked():
+    def on_enter(event):
+        submit()
+
     def submit():
-        k = int(input_box.get())
-        inputWindow.destroy()
-        km.kmeans(data, k)
+        try:
+            k = int(input_box.get())
+            inputWindow.destroy()
+            km.kmeans(data, k)
+        except:
+            print("error")
         
         
     inputWindow = tkw.Window(200, 100).window
     label = tk.Label(inputWindow, text="Enter cluster size")
     label.pack()
     input_box = tk.Entry(inputWindow)
+
     input_box.pack()
+
+    input_box.bind("<Return>", on_enter)
 
     # Create the submit button
     submit_button = tk.Button(inputWindow, text="Submit", command=submit)
@@ -59,6 +70,44 @@ def button2_clicked():
 def button3_clicked():
     tree.plot_dendrogram(data)
 
+def button4_clicked():
+    dbs.neighbors(data)
+
+def button5_clicked():
+    def on_enter(event):
+        submit()
+
+    def submit():
+        try:
+            eps = int(input_box.get())
+            min_samples = int(input_box2.get())
+            inputWindow.destroy()
+            dbs.dbscan(data, eps, min_samples)
+        except:
+            print("error")
+        inputWindow.destroy()
+        dbs.dbscan(data, eps, min_samples)
+        
+        
+    inputWindow = tkw.Window(200, 100).window
+    label = tk.Label(inputWindow, text="Enter eps")
+    label.pack()
+    input_box = tk.Entry(inputWindow)
+    input_box.insert(0, "16")
+    input_box.pack()
+    label = tk.Label(inputWindow, text="Enter min_samples")
+    label.pack()
+    input_box2 = tk.Entry(inputWindow)
+    input_box2.insert(0, "30")
+    input_box2.pack()
+
+    input_box.bind("<Return>", on_enter)
+    input_box2.bind("<Return>", on_enter)
+
+    # Create the submit button
+    submit_button = tk.Button(inputWindow, text="Submit", command=submit)
+    submit_button.pack()
+
 buttons = []
 
 button = tk.Button(window, text="elbow", command=lambda: button1_clicked())
@@ -66,6 +115,10 @@ buttons.append(button)
 button = tk.Button(window, text="kmeans", command=lambda: button2_clicked())
 buttons.append(button)
 button = tk.Button(window, text="dendrogram", command=lambda: button3_clicked())
+buttons.append(button)
+button = tk.Button(window, text="neighbour", command=lambda: button4_clicked())
+buttons.append(button)
+button = tk.Button(window, text="dbscan", command=lambda: button5_clicked())
 buttons.append(button)
 
 # Configure the buttons' width and height
@@ -89,43 +142,3 @@ window.grid_columnconfigure(0, weight=1)
 window.grid_columnconfigure(2, weight=1)
 # Start the main event loop
 window.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-# neighb = NearestNeighbors(n_neighbors=4) # creating an object of the NearestNeighbors class
-# nbrs=neighb.fit(data) # fitting the data to the object
-# distances,indices=nbrs.kneighbors(data) # finding the nearest neighbours
-
-# # Sort and plot the distances results
-# distances = np.sort(distances, axis = 0) # sorting the distances
-# distances = distances[:, 1] # taking the second column of the sorted distances
-# plt.plot(distances) # plotting the distances
-# plt.show() # showing the plot
-
-# # Perform DBSCAN clustering
-
-# dbscan = DBSCAN(eps=16, min_samples=30)  # Adjust the parameters as per your data
-# dbscan.fit(data)
-
-# # data['cluster'] = dbscan.labels_
-
-# print(data.head())
-
-# pca = PCA(n_components=2)
-# x = pca.fit_transform(data)
-
-# x = pd.DataFrame(x)
-# x['cluster'] = dbscan.labels_
-
-# # plt.scatter(x[0], x[1], c=x['cluster'], labels=legend_labels)
-# # plt.legend()
-# sns.scatterplot(x=0, y=1, hue='cluster', data=x, palette='Set1')
-# plt.show()
