@@ -3,10 +3,7 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
-import tkinter as tk
-import tkWindow as tkw
-import matplotlib  
-# matplotlib.use("TkAgg")
+from tkWindow import screen_center
 
 def elbow(data):
     sse = []
@@ -17,7 +14,7 @@ def elbow(data):
 
     fig, ax = plt.subplots(figsize=(9,6))
     
-    tkw.screen_center(fig)
+    screen_center(fig)
 
     ax.plot(range(1,11), sse, marker='o')
     ax.set_title('Elbow curve')
@@ -42,7 +39,7 @@ def kmeans(data, k):
 
     fig, ax = plt.subplots(figsize=(9,6))
 
-    tkw.screen_center(fig)
+    screen_center(fig)
 
     ax.scatter(x[:, 0], x[:, 1], c=kmeans.labels_)
     ax.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1] , marker='s', s=500, alpha=0.5)

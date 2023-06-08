@@ -5,7 +5,7 @@ import os
 import tkinter as tk
 import tkWindow as tkw
 import dbscan as dbs
-
+from dataframe import window as dataframe
 
 pd.options.mode.chained_assignment = None 
 
@@ -21,15 +21,15 @@ def main():
 
     data = df[selected_columns]
 
-    window = tkw.Window(500, 500, "Menu").window
-
-
-
+    window = tkw.Window(500, 700, "Menu", bg='darkblue').window
 
     def button1_clicked():
-        km.elbow(data)
+        dataframe(data)
 
     def button2_clicked():
+        km.elbow(data)
+
+    def button3_clicked():
         def on_enter(event):
             submit()
 
@@ -57,13 +57,13 @@ def main():
 
         
 
-    def button3_clicked():
+    def button4_clicked():
         tree.plot_dendrogram(data)
 
-    def button4_clicked():
+    def button5_clicked():
         dbs.neighbors(data)
 
-    def button5_clicked():
+    def button6_clicked():
         def on_enter(event):
             submit()
 
@@ -100,15 +100,17 @@ def main():
 
     buttons = []
 
-    button = tk.Button(window, text="elbow", command=lambda: button1_clicked())
+    button = tk.Button(window, text="dataframe", command=lambda: button1_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="kmeans", command=lambda: button2_clicked())
+    button = tk.Button(window, text="elbow", command=lambda: button2_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="dendrogram", command=lambda: button3_clicked())
+    button = tk.Button(window, text="kmeans", command=lambda: button3_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="neighbour", command=lambda: button4_clicked())
+    button = tk.Button(window, text="dendrogram", command=lambda: button4_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="dbscan", command=lambda: button5_clicked())
+    button = tk.Button(window, text="neighbour", command=lambda: button5_clicked())
+    buttons.append(button)
+    button = tk.Button(window, text="dbscan", command=lambda: button6_clicked())
     buttons.append(button)
 
     # Configure the buttons' width and height

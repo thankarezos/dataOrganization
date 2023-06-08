@@ -3,10 +3,12 @@
 import tkinter
 
 class Window:
-    def __init__(self, window_width, window_height, window_title=""):
+    def __init__(self, window_width=500, window_height=500, window_title="", bg="white" ):
         self.window = tkinter.Tk()
         screen_width = self.window.winfo_screenwidth()
         screen_height = self.window.winfo_screenheight()
+
+        self.window.configure(bg=bg)
 
         x = (screen_width - window_width) // 2
         y = (screen_height - window_height) // 2
