@@ -10,9 +10,9 @@ def window (data):
     # text_widget_width = (sum(column_widths) + len(data.columns)) * 5
     # dataWindow = tkw.Window(text_widget_width * 8, 500, bg='darkblue').window
     print(data.head())
-    dataWindow = tkw.Window(1200, 800, bg='darkblue').window
+    dataWindow = tkw.Window(800, 800, bg='darkblue').window
 
-    sheet = tksheet.Sheet(dataWindow, data=data, width=1200, height=800)
+    sheet = tksheet.Sheet(dataWindow, data=data, width=1600, height=800)
 
     sheet.set_sheet_data(data.values.tolist())
 

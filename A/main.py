@@ -6,6 +6,7 @@ import tkinter as tk
 import tkWindow as tkw
 import dbscan as dbs
 from dataframe import window as dataframe
+from sklearn.preprocessing import MinMaxScaler
 
 pd.options.mode.chained_assignment = None 
 
@@ -18,8 +19,13 @@ def main():
 
 
     selected_columns = ['longmon', 'tollmon', 'equipmon', 'cardmon', 'wiremon', 'multline', 'voice', 'pager', 'internet', 'forward', 'confer', 'ebill']
-
     data = df[selected_columns]
+
+    print(data)
+
+    # scaler = MinMaxScaler()
+    # data = scaler.fit_transform(data)
+    # data = pd.DataFrame(data, columns=selected_columns)
 
     window = tkw.Window(500, 700, "Menu", bg='darkblue').window
 
@@ -55,28 +61,50 @@ def main():
         submit_button = tk.Button(inputWindow, text="Submit", command=submit)
         submit_button.pack()
 
-        
-
     def button4_clicked():
-        tree.plot_dendrogram(data)
+        tree.plot_dendrogram(data)     
 
     def button5_clicked():
-        dbs.neighbors(data)
-
-    def button6_clicked():
         def on_enter(event):
             submit()
 
         def submit():
             try:
-                eps = int(input_box.get())
+                k = int(input_box.get())
+                inputWindow.destroy()
+                tree.agglomerativeClustering(data, k)
+            except:
+                print("error")
+            
+            
+        inputWindow = tkw.Window(200, 100).window
+        label = tk.Label(inputWindow, text="Enter cluster size")
+        label.pack()
+        input_box = tk.Entry(inputWindow)
+
+        input_box.pack()
+
+        input_box.bind("<Return>", on_enter)
+
+        # Create the submit button
+        submit_button = tk.Button(inputWindow, text="Submit", command=submit)
+        submit_button.pack()
+
+    def button6_clicked():
+        dbs.neighbors(data)
+
+    def button7_clicked():
+        def on_enter(event):
+            submit()
+
+        def submit():
+            try:
+                eps = float(input_box.get())
                 min_samples = int(input_box2.get())
                 inputWindow.destroy()
                 dbs.dbscan(data, eps, min_samples)
             except:
                 print("error")
-            inputWindow.destroy()
-            dbs.dbscan(data, eps, min_samples)
             
             
         inputWindow = tkw.Window(200, 100).window
@@ -108,9 +136,11 @@ def main():
     buttons.append(button)
     button = tk.Button(window, text="dendrogram", command=lambda: button4_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="neighbour", command=lambda: button5_clicked())
+    button = tk.Button(window, text="agglomerative", command=lambda: button5_clicked())
     buttons.append(button)
-    button = tk.Button(window, text="dbscan", command=lambda: button6_clicked())
+    button = tk.Button(window, text="neighbour", command=lambda: button6_clicked())
+    buttons.append(button)
+    button = tk.Button(window, text="dbscan", command=lambda: button7_clicked())
     buttons.append(button)
 
     # Configure the buttons' width and height

@@ -6,9 +6,9 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.ensemble import IsolationForest
 
-models = 7
+models = 8
 
-def knn(data, option=7):
+def knn(data, option=8):
 
     features = data.iloc[:, :-1]  # All columns except the last one
     labels = data.iloc[:, -1]  # Last column
@@ -30,7 +30,9 @@ def knn(data, option=7):
     elif option == 6:
         knn = KNeighborsClassifier(n_neighbors=7, metric='minkowski', n_jobs=-1, weights='distance', algorithm='auto', leaf_size=30)
     elif option == 7:
-        knn = KNeighborsClassifier(n_neighbors=7, metric='manhattan', n_jobs=-1, weights='distance', algorithm='auto', leaf_size=30)
+        knn = KNeighborsClassifier(n_neighbors=7, metric='chebyshev', n_jobs=-1, weights='distance', algorithm='auto', leaf_size=30)
+    elif option == 8:
+        knn = KNeighborsClassifier(n_neighbors=7, metric='manhattan', n_jobs=-1, weights='distance', algorithm='brute', leaf_size=30)
 
     knn.fit(X_train, y_train)
 

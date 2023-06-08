@@ -30,7 +30,9 @@ def kmeans(data, k):
 
     kmeans = KMeans(n_clusters=k, random_state=0, n_init=1).fit(data)
     # data.loc[:, 'cluster'] = kmeans.labels_
-    print(data.head())
+    dataKmeans = data.copy()
+    dataKmeans.loc[:, 'cluster'] = kmeans.labels_
+    print(dataKmeans)
 
     pca = PCA(n_components=2)
     x = pca.fit_transform(data)
