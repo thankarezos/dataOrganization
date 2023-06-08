@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
 models = 4
 
@@ -32,4 +34,10 @@ def decision_tree(data, option=3):
 
     # Evaluate the accuracy of the model
     accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='macro')
+    recall = recall_score(y_test, y_pred, average='macro')
+
+    
     print("Accuracy:", accuracy)
+    print("Precision:", precision)
+    print("Recall:", recall)
