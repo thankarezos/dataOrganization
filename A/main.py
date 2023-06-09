@@ -18,7 +18,7 @@ def main():
     df = pd.read_csv(data_file_path)
 
 
-    selected_columns = ['longmon', 'tollmon', 'equipmon', 'cardmon', 'wiremon', 'multline', 'voice', 'pager', 'internet', 'forward', 'confer', 'ebill']
+    selected_columns = ['longmon', 'tollmon', 'equipmon', 'cardmon', 'wiremon', 'multline', 'voice', 'pager', 'internet', 'forward', 'confer', 'ebill', 'churn']
     data = df[selected_columns]
 
     print(data)
@@ -44,7 +44,8 @@ def main():
                 k = int(input_box.get())
                 inputWindow.destroy()
                 km.kmeans(data, k)
-            except:
+            except Exception as e:
+                print(e)
                 print("error")
             
             
@@ -73,9 +74,9 @@ def main():
                 k = int(input_box.get())
                 inputWindow.destroy()
                 tree.agglomerativeClustering(data, k)
-            except:
+            except Exception as e:
+                print(e)
                 print("error")
-            
             
         inputWindow = tkw.Window(200, 100).window
         label = tk.Label(inputWindow, text="Enter cluster size")
